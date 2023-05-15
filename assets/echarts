@@ -1,0 +1,90 @@
+setTimeout(function () {
+  option = {
+    legend: {},
+    tooltip: {
+      trigger: 'axis',
+      showContent: false
+    },
+    dataset: {
+      source: [
+        ['product', '1961', '1982', '1988', '1996', '2001', '2006', '2013', '2019'],
+        ['古建筑', 77, 28, 111, 110, 248, 513, 804, 283],
+        ['古墓葬', 19, 7, 29, 22, 50, 77, 195, 35],
+        ['古遗址', 26, 10, 49, 54, 144, 221, 528, 177],
+        ['代表性、纪念性建筑物', 33, 10, 41, 52, 41, 206, 344, 259],
+        ['石窟寺、石刻及其他', 25, 7, 28, 12, 37, 64, 120, 58]
+      ]
+    },
+    xAxis: { type: 'category' },
+    yAxis: { gridIndex: 0 },
+    grid: { top: '55%' },
+    series: [
+      {
+        type: 'line',
+        smooth: true,
+        seriesLayoutBy: 'row',
+        emphasis: { focus: 'series' }
+      },
+      {
+        type: 'line',
+        smooth: true,
+        seriesLayoutBy: 'row',
+        emphasis: { focus: 'series' }
+      },
+      {
+        type: 'line',
+        smooth: true,
+        seriesLayoutBy: 'row',
+        emphasis: { focus: 'series' }
+      },
+      {
+        type: 'line',
+        smooth: true,
+        seriesLayoutBy: 'row',
+        emphasis: { focus: 'series' }
+      },
+      {
+        type: 'line',
+        smooth: true,
+        seriesLayoutBy: 'row',
+        emphasis: { focus: 'series' }
+      },
+      {
+        type: 'pie',
+        id: 'pie',
+        radius: '30%',
+        center: ['50%', '25%'],
+        emphasis: {
+          focus: 'self'
+        },
+        label: {
+          formatter: '{b}: {@2012} ({d}%)'
+        },
+        encode: {
+          itemName: 'product',
+          value: '2012',
+          tooltip: '2012'
+        }
+      }
+    ]
+  };
+  myChart.on('updateAxisPointer', function (event) {
+    const xAxisInfo = event.axesInfo[0];
+    if (xAxisInfo) {
+      const dimension = xAxisInfo.value + 1;
+      myChart.setOption({
+        series: {
+          id: 'pie',
+          label: {
+            formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+          },
+          encode: {
+            value: dimension,
+            tooltip: dimension
+          }
+        }
+      });
+    }
+  });
+  myChart.setOption(option);
+});
